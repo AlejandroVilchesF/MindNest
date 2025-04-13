@@ -1,12 +1,16 @@
-# Node dependencies
+# Node modules
 **/node_modules/
+
+# Env files
+**/.env*
 
 # Lock files
 **/package-lock.json
 **/yarn.lock
 
-# Environment variables
-**/.env*
-
-# Dist folders
+# Build output
 **/dist/
+
+# IDE / Editor config
+.vscode/
+*.log
