@@ -1,0 +1,78 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["mindnest"]
+}
+
+model boards {
+  board_id     Int            @id @default(autoincrement())
+  board_name   String         @db.VarChar(255)
+  created      DateTime?      @default(now()) @db.Timestamp(6)
+  modified     DateTime?      @default(now()) @db.Timestamp(6)
+  notes        notes[]
+  users_boards users_boards[]
+
+  @@schema("mindnest")
+}
+
+model notes {
+  note_id     Int          @id @default(autoincrement())
+  note_title  String       @db.VarChar(255)
+  position    Int?
+  created     DateTime?    @default(now()) @db.Timestamp(6)
+  modified    DateTime?    @default(now()) @db.Timestamp(6)
+  parent_note Int?
+  board_id    Int
+  boards      boards       @relation(fields: [board_id], references: [board_id], onDelete: Cascade, onUpdate: NoAction)
+  notes       notes?       @relation("notesTonotes", fields: [parent_note], references: [note_id], onDelete: Cascade, onUpdate: NoAction)
+  other_notes notes[]      @relation("notesTonotes")
+  notes_text  notes_text[]
+
+  @@schema("mindnest")
+}
+
+model notes_text {
+  text_id                             Int       @id @default(autoincrement())
+  content                             String?
+  note_id                             Int
+  created                             DateTime? @default(now()) @db.Timestamp(6)
+  modified                            DateTime? @default(now()) @db.Timestamp(6)
+  created_by                          Int?
+  modified_by                         Int?
+  users_notes_text_created_byTousers  users?    @relation("notes_text_created_byTousers", fields: [created_by], references: [user_id], onUpdate: NoAction)
+  users_notes_text_modified_byTousers users?    @relation("notes_text_modified_byTousers", fields: [modified_by], references: [user_id], onUpdate: NoAction)
+  notes                               notes     @relation(fields: [note_id], references: [note_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("mindnest")
+}
+
+model users {
+  user_id                                  Int            @id @default(autoincrement())
+  user_name                                String         @db.VarChar(255)
+  user_password                            String         @db.VarChar(255)
+  user_email                               String         @db.VarChar(255)
+  created                                  DateTime?      @default(now()) @db.Timestamp(6)
+  modified                                 DateTime?      @default(now()) @db.Timestamp(6)
+  notes_text_notes_text_created_byTousers  notes_text[]   @relation("notes_text_created_byTousers")
+  notes_text_notes_text_modified_byTousers notes_text[]   @relation("notes_text_modified_byTousers")
+  users_boards                             users_boards[]
+
+  @@schema("mindnest")
+}
+
+model users_boards {
+  user_id   Int
+  board_id  Int
+  role      String    @default("viewer") @db.VarChar(50)
+  joined_at DateTime? @default(now()) @db.Timestamp(6)
+  boards    boards    @relation(fields: [board_id], references: [board_id], onDelete: Cascade, onUpdate: NoAction)
+  users     users     @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, board_id])
+  @@schema("mindnest")
+}
