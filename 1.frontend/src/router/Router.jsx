@@ -7,13 +7,15 @@ import NotFound from '@/pages/NotFound/NotFound'
 export default function Router() {
   return (
     <RouterDom>
-      <Layout>
-        <Routes>
+      <Routes>
+        {/* Ruta padre con Layout */}
+        <Route element={<Layout />}>
+          {/* Rutas hijas renderizan dentro del Outlet */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </RouterDom>
   )
 }
