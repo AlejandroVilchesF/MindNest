@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Home() {
+function Boards() {
   return (
     <>
-      <h1>Home Page</h1>
+      <h1>Boards</h1>
     </>
   )
 }
 
-export default Home
+export default Boards
