@@ -19,13 +19,13 @@ export default function Header() {
       {/* Centro: Navegación intermedia */}
       <div className="flex space-x-10">
         <NavElement to="/boards" label="Boards" Icon={ClipboardIcon} />
-        <NavElement to="/new-board" label="New Board" Icon={PlusCircleIcon} />
+        <NavElement to="/boards" label="New Board" Icon={PlusCircleIcon} />
         <NavElement to="/notes" label="Notes" Icon={PaperClipIcon} />
       </div>
 
       {/* Derecha: Usuario */}
       <div className="flex-shrink-0 mr-5">
-        <NavElement to="/user" label="" Icon={UserIcon} />
+        <NavElement to="/users" label="" Icon={UserIcon} />
       </div>
     </nav>
   );
