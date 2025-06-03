@@ -25,7 +25,7 @@ export default function Header() {
 
       {/* Right: User */}
       <div className="flex-shrink-0 mr-5">
-        <NavElement to="/users" label="" Icon={UserIcon} />
+        <NavElement to="/login" label="" Icon={UserIcon} />
       </div>
     </nav>
   );
