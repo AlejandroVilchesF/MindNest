@@ -8,13 +8,8 @@ services:
     restart: always
     working_dir: /home/frontend
     tty: true
-    environment:
-      - NODE_ENV=development
-      - FRONTEND_PORT=3000
-      - FRONTEND_BASEPATH=/
-      - BACKEND_URI=http://localhost:8091/api
-      - NODE_OPTIONS=--openssl-legacy-provider
-      - TZ=Europe/Madrid
+    env_file:
+      - .env_frontend
     volumes:
       - ./../../1.frontend:/home/frontend
     expose:
@@ -34,7 +29,7 @@ services:
     working_dir: /home/backend
     tty: true
     env_file:
-      - .env
+      - .env_backend
     volumes:
       - './../../2.backend/:/home/backend'
     expose:
@@ -49,12 +44,8 @@ services:
     image: "postgres:15-alpine"
     container_name: postgres
     restart: always
-    environment:
-      - POSTGRES_HOST=172.20.118.90 # Can change once we restart WSL
-      - POSTGRES_DB=mindnestdb
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - TZ=Europe/Madrid
+    env_file:
+      - .env_bbdd
     expose:
       - '5432'
     ports:

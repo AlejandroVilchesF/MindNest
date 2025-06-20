@@ -24,6 +24,7 @@ model notes {
   note_id     Int          @id @default(autoincrement())
   note_title  String       @db.VarChar(255)
   position    Int?
+  completed   Boolean?
   created     DateTime?    @default(now()) @db.Timestamp(6)
   modified    DateTime?    @default(now()) @db.Timestamp(6)
   parent_note Int?

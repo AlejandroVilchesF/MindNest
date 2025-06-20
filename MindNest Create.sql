@@ -35,6 +35,7 @@ CREATE TABLE users_boards (
 CREATE TABLE notes (
 	note_id SERIAL PRIMARY KEY,
 	note_title VARCHAR(255) NOT NULL,
+    completed BOOLEAN,
 	position INTEGER,
 	created TIMESTAMP DEFAULT NOW(),
     modified TIMESTAMP DEFAULT NOW(),
