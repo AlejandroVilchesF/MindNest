@@ -15,7 +15,7 @@ export default function RegisterForm({ switchMode }) {
         <img
           src={MindNest}
           alt="MindNest Logo"
-          className="max-w-full max-h-full rounded"
+          className="w-full h-full rounded"
         />
       </div>
       {/* Form */}

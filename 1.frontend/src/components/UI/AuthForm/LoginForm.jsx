@@ -10,7 +10,7 @@ export default function LoginForm({switchMode}) {
   return (
     <>
       {/* Form */}
-      <div className="p-4 my-5">
+      <div className="p-4">
         <h1 className="font-bold">Login to Dashboard</h1>
         <p className="font-thin text-[10px] mb-4">Fill the below form to login</p>
         {/* Inputs */}
@@ -36,7 +36,7 @@ export default function LoginForm({switchMode}) {
       </div>
       {/* Image */}
       <div className="p-4">
-        <img src={MindNest} alt="MindNest Logo" className="max-w-full max-h-full rounded"/>
+        <img src={MindNest} alt="MindNest Logo" className="w-full h-full rounded"/>
       </div>
     </>
   );
