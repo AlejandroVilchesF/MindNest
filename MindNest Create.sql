@@ -19,7 +19,9 @@ CREATE TABLE boards (
 	board_id SERIAL PRIMARY KEY,
 	board_name VARCHAR(255) NOT NULL,
 	created TIMESTAMP DEFAULT NOW(),
-    modified TIMESTAMP DEFAULT NOW()
+    modified TIMESTAMP DEFAULT NOW(),
+    created_by INTEGER,
+    FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL
 );
 
 CREATE TABLE users_boards (
