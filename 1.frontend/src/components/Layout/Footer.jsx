@@ -18,7 +18,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="flex items-center justify-between w-screen px-2 py-3 bg-white shadow">
+    <footer className="flex items-center justify-between w-screen px-2 py-3 bg-white shadow border border-black">
       {/* Left: Copyright */}
       <p>© 2025 MindNest — Built by Alejandro Vilches</p>
       {/* Right: Links */}

@@ -8,7 +8,7 @@ import { UserIcon } from "@heroicons/react/24/outline";
 
 export default function Header() {
   return (
-    <nav className="flex items-center justify-between w-full px-0 py-0 bg-white shadow">
+    <nav className="flex items-center justify-between w-full px-0 py-0 border border-black bg-white shadow">
       {/* Left: Logo */}
       <div className="flex-shrink-0 h-12 w-16 ml-0">
         <Link to="/">
