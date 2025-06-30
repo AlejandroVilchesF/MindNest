@@ -1,5 +1,6 @@
 import Sidebar from "@/components/Layout/Sidebar";
 import Board from "@/components/UI/Board";
+import { useState } from 'react';
 
 function Boards() {
   // Example Board to work with the frontend
@@ -115,12 +116,17 @@ function Boards() {
       notes: [],
     },
   ];
+
+  // UseState to control which board is visualized
+  const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
+  const selectedBoard = boards.find(board => board.board_id === selectedBoardId);
+
   return (
     <div className="flex h-full">
       {/* Sidebar */}
-      <Sidebar boards={boards} />
+      <Sidebar boards={boards} onSelectBoard={setSelectedBoardId}/>
       {/* Board Content*/}
-      <Board board={boards[0]} />
+      {selectedBoard && <Board board={selectedBoard} />}
     </div>
   );
 }
