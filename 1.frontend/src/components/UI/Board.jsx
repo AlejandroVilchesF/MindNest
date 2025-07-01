@@ -52,7 +52,7 @@ function Board({ board }) {
       {/* Notes content */}
       <main className="flex-1 p-4 flex space-x-4">
         {groupNotes(board.notes).map((group) => (<Note key={group.parentId} notes={group.notes} />))}
-        <div className="bg-white w-40 h-fit text-center">+ Add a New Note</div>
+        <div className="bg-white hover:bg-gray-100 w-60 h-fit rounded-lg py-3 px-4 text-sm shadow-sm cursor-pointer font-bold">+ Add a new note</div>
       </main>
     </div>
   );
