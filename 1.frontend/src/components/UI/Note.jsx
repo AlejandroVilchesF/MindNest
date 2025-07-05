@@ -1,5 +1,6 @@
 import NoteItem from "./NoteItem";
 import Modal from './Modal';
+import ContentModal from "./ContentModal";
 import { useState } from 'react';
 
 function Note({notes}) {
@@ -13,8 +14,7 @@ function Note({notes}) {
       </div>
       
       <Modal isOpen={!!selectedNote} onClose={() => setSelectedNote(null)}>
-        <h2 className="text-xl font-semibold mb-2">{selectedNote?.note_title}</h2>
-        <p>{selectedNote?.note_content}</p>
+        <ContentModal content={selectedNote} onClose={() => setSelectedNote(null)}/>
       </Modal>
     </>
   );
