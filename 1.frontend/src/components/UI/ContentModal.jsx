@@ -3,6 +3,18 @@ import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
 
 function ContentModal({ content, onClose }) {
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+
+    const year = date.getFullYear();
+    const month = date.toLocaleString("en-US", { month: "short" });
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${month} ${day}, ${year} | ${hours}:${minutes}`;
+  };
+
   return (
     <>
       {/* Modal Title */}
@@ -13,7 +25,7 @@ function ContentModal({ content, onClose }) {
         </button>
       </div>
       {/* Modal Body */}
-      <div className="mt-3 flex gap-2">
+      <div className="mt-3 flex gap-3">
         {/* Left Side */}
         <div className="flex-column basis-[65%] border-r">
           {/* Left Side Header */}
@@ -27,11 +39,8 @@ function ContentModal({ content, onClose }) {
             <div></div>
           </div>
           {/* Left Side Body */}
-          <div className="mt-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste nobis
-            molestias nisi autem, laudantium suscipit ad consectetur dicta fuga
-            aut dolorum soluta, repudiandae dolor tempora? Optio non modi vitae
-            assumenda.
+          <div className="mt-2 cursor-pointer mr-2">
+            {content.description}
           </div>
         </div>
         {/* Right Side */}
@@ -43,6 +52,20 @@ function ContentModal({ content, onClose }) {
               <ChatBubbleLeftEllipsisIcon className="w-5 h-5 mr-2" />
               <span className="text-md font-medium">Activity</span>
             </div>
+          </div>
+          {/* Right Side Body */}
+          <div className="mt-2">
+            {/* Historic */}
+            <div>
+              {/* User */}
+              <div>
+                <strong className="font-semibold">{content.created_by.user_name}</strong> added this note.
+              </div>
+              {/* Date */}
+              <div className="text-gray-600 text-sm">
+                {formatDate(content.created)}
+              </div>
+            </div> 
           </div>
         </div>
       </div>

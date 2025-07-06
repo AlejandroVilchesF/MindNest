@@ -1,6 +1,6 @@
 import Sidebar from "@/components/Layout/Sidebar";
 import Board from "@/components/UI/Board";
-import { useState } from 'react';
+import { useState } from "react";
 
 function Boards() {
   // Example Board to work with the frontend
@@ -24,24 +24,41 @@ function Boards() {
           parent_note: null,
           created: "2025-06-01T09:05:00Z",
           modified: "2025-06-01T09:30:00Z",
+          created_by: {
+            user_id: 10,
+            user_name: "johndoe",
+            user_email: "john@example.com",
+          },
         },
         {
           note_id: 2,
           note_title: "Meditate for 10 minutes",
+          description: "Focus on breathing and clear the mind.",
           completed: true,
           position: 2,
           parent_note: 1,
           created: "2025-06-01T09:06:00Z",
           modified: "2025-06-01T09:15:00Z",
+          created_by: {
+            user_id: 10,
+            user_name: "johndoe",
+            user_email: "john@example.com",
+          },
         },
         {
           note_id: 3,
           note_title: "Make breakfast",
+          description: "Prepare eggs and toast with orange juice.",
           completed: false,
           position: 3,
           parent_note: 1,
           created: "2025-06-01T09:06:00Z",
           modified: "2025-06-01T09:15:00Z",
+          created_by: {
+            user_id: 10,
+            user_name: "johndoe",
+            user_email: "john@example.com",
+          },
         },
         {
           note_id: 4,
@@ -51,15 +68,26 @@ function Boards() {
           parent_note: null,
           created: "2025-06-01T09:05:00Z",
           modified: "2025-06-01T09:30:00Z",
+          created_by: {
+            user_id: 10,
+            user_name: "johndoe",
+            user_email: "john@example.com",
+          },
         },
         {
           note_id: 5,
           note_title: "Make dinner",
+          description: "Prepare a healthy and satisfying meal that doesn't take too much time — something like a vegetable stir fry with tofu or chicken. Aim for a balance of protein, fiber, and flavor to stay energized for the rest of the day.",
           completed: false,
           position: 1,
           parent_note: 4,
           created: "2025-06-01T09:06:00Z",
           modified: "2025-06-01T09:15:00Z",
+          created_by: {
+            user_id: 10,
+            user_name: "johndoe",
+            user_email: "john@example.com",
+          },
         },
       ],
     },
@@ -82,24 +110,42 @@ function Boards() {
           parent_note: null,
           created: "2025-06-10T14:30:00Z",
           modified: "2025-06-10T15:00:00Z",
+          created_by: {
+            user_id: 12,
+            user_name: "annasmith",
+            user_email: "anna@example.com",
+          },
         },
         {
           note_id: 11,
           note_title: "Review with UX Team",
+          description: "Schedule a feedback session with the design team.",
           completed: false,
           position: 2,
           parent_note: 10,
           created: "2025-06-11T09:00:00Z",
           modified: "2025-06-11T09:45:00Z",
+          created_by: {
+            user_id: 12,
+            user_name: "annasmith",
+            user_email: "anna@example.com",
+          },
         },
         {
           note_id: 12,
           note_title: "Finalize Assets",
+          description:
+            "Export all icons and illustrations in required formats.",
           completed: true,
           position: 3,
           parent_note: 10,
           created: "2025-06-11T10:00:00Z",
           modified: "2025-06-12T11:00:00Z",
+          created_by: {
+            user_id: 12,
+            user_name: "annasmith",
+            user_email: "anna@example.com",
+          },
         },
       ],
     },
@@ -119,12 +165,14 @@ function Boards() {
 
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
-  const selectedBoard = boards.find(board => board.board_id === selectedBoardId);
+  const selectedBoard = boards.find(
+    (board) => board.board_id === selectedBoardId
+  );
 
   return (
     <div className="flex h-full">
       {/* Sidebar */}
-      <Sidebar boards={boards} onSelectBoard={setSelectedBoardId}/>
+      <Sidebar boards={boards} onSelectBoard={setSelectedBoardId} />
       {/* Board Content*/}
       {selectedBoard && <Board board={selectedBoard} />}
     </div>
