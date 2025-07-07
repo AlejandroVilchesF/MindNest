@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function Boards() {
   // Example Board to work with the frontend
-  const boards = [
+  const [boards, setBoards] = useState([
     {
       board_id: 1,
       board_name: "Daily Tasks",
@@ -161,7 +161,16 @@ function Boards() {
       },
       notes: [],
     },
-  ];
+  ]);
+
+  //UseState to control the toggle of the check in the differents Notes
+  const toggleNoteCompleted = (note_id) => {
+    const updatedBoards = boards.map((board) => ({
+      ...board, notes: board.notes.map((note) =>
+        note.note_id === note_id ? { ...note, completed: !note.completed } : note),
+    }));
+    setBoards(updatedBoards);
+  };
 
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
@@ -174,7 +183,7 @@ function Boards() {
       {/* Sidebar */}
       <Sidebar boards={boards} onSelectBoard={setSelectedBoardId} />
       {/* Board Content*/}
-      {selectedBoard && <Board board={selectedBoard} />}
+      {selectedBoard && <Board board={selectedBoard} onToggleNoteCompleted={toggleNoteCompleted} />}
     </div>
   );
 }

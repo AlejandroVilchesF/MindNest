@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
 import { Bars3BottomLeftIcon } from "@heroicons/react/24/solid";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import { MinusCircleIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
 
-function ContentModal({ content, onClose }) {
+function ContentModal({ content, onClose, onToggleNoteCompleted }) {
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
 
@@ -15,11 +18,30 @@ function ContentModal({ content, onClose }) {
     return `${month} ${day}, ${year} | ${hours}:${minutes}`;
   };
 
+  const [completed, setCompleted] = useState(content.completed);
+
+  useEffect(() => {
+    setCompleted(content.completed);
+  }, [content.completed]);
+
+  const handleToggle = () => {
+    setCompleted(!completed);
+    onToggleNoteCompleted(content.note_id);
+  };
+
+  const CompletedIcon = completed ? CheckCircleIcon : MinusCircleIcon;
+  const iconColor = completed ? "text-green-500" : "text-gray-400";
+
   return (
     <>
       {/* Modal Title */}
       <div className="flex justify-between border-b border-gray-500">
-        <span className="font-bold text-lg">{content.note_title}</span>
+        {/* Title and Check */}
+        <div className="flex justify-between items-center">
+          <span className="font-bold text-lg">{content.note_title}</span>
+          <CompletedIcon className={`w-5 h-5 ml-2 cursor-pointer ${iconColor}`} onClick={handleToggle}/>
+        </div>
+        {/* Close Button */}
         <button onClick={onClose} className="text-gray-500 cursor-pointer">
           &times;
         </button>
@@ -39,9 +61,7 @@ function ContentModal({ content, onClose }) {
             <div></div>
           </div>
           {/* Left Side Body */}
-          <div className="mt-2 cursor-pointer mr-2">
-            {content.description}
-          </div>
+          <div className="mt-2 cursor-pointer mr-2">{content.description}</div>
         </div>
         {/* Right Side */}
         <div className="basis-[35%]">
@@ -59,13 +79,16 @@ function ContentModal({ content, onClose }) {
             <div>
               {/* User */}
               <div>
-                <strong className="font-semibold">{content.created_by.user_name}</strong> added this note.
+                <strong className="font-semibold">
+                  {content.created_by.user_name}
+                </strong>{" "}
+                added this note.
               </div>
               {/* Date */}
               <div className="text-gray-600 text-sm">
                 {formatDate(content.created)}
               </div>
-            </div> 
+            </div>
           </div>
         </div>
       </div>
