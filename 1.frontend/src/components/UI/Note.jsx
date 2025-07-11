@@ -3,7 +3,7 @@ import Modal from './Modal';
 import ContentModal from "./ContentModal";
 import { useState } from 'react';
 
-function Note({notes, onToggleNoteCompleted }) {
+function Note({notes, onToggleNoteCompleted, onDescriptionChange }) {
   const [selectedNote, setSelectedNote] = useState(null);
 
   return (
@@ -14,7 +14,7 @@ function Note({notes, onToggleNoteCompleted }) {
       </div>
       
       <Modal isOpen={!!selectedNote} onClose={() => setSelectedNote(null)}>
-        <ContentModal content={selectedNote} onClose={() => setSelectedNote(null)} onToggleNoteCompleted={onToggleNoteCompleted}/>
+        <ContentModal content={selectedNote} onClose={() => setSelectedNote(null)} onToggleNoteCompleted={onToggleNoteCompleted} onDescriptionChange={onDescriptionChange}/>
       </Modal>
     </>
   );

@@ -4,6 +4,9 @@ function Button({ text, type = "normal", color = "blue", extraClasses="", onClic
     blue: {
       normal: "bg-[#00549D] text-white border border-[#00549D]",
       outline: "border border-[#00549D] border-2 font-semibold bg-transparent",
+    },
+    transparent: {
+      normal: "bg-transparent hover:bg-gray-50",
     }
   };
   // Base classes for button styles

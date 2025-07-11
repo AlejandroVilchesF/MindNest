@@ -77,7 +77,8 @@ function Boards() {
         {
           note_id: 5,
           note_title: "Make dinner",
-          description: "Prepare a healthy and satisfying meal that doesn't take too much time — something like a vegetable stir fry with tofu or chicken. Aim for a balance of protein, fiber, and flavor to stay energized for the rest of the day.",
+          description:
+            "Prepare a healthy and satisfying meal that doesn't take too much time — something like a vegetable stir fry with tofu or chicken. Aim for a balance of protein, fiber, and flavor to stay energized for the rest of the day.",
           completed: false,
           position: 1,
           parent_note: 4,
@@ -163,11 +164,28 @@ function Boards() {
     },
   ]);
 
-  //UseState to control the toggle of the check in the differents Notes
+  //Control the toggle of the check in the differents Notes
   const toggleNoteCompleted = (note_id) => {
     const updatedBoards = boards.map((board) => ({
-      ...board, notes: board.notes.map((note) =>
-        note.note_id === note_id ? { ...note, completed: !note.completed } : note),
+      ...board,
+      notes: board.notes.map((note) =>
+        note.note_id === note_id
+          ? { ...note, completed: !note.completed }
+          : note
+      ),
+    }));
+    setBoards(updatedBoards);
+  };
+
+  //Control the description modifications
+  const handleDescriptionChange = (note_id, newDescription) => {
+    const updatedBoards = boards.map((board) => ({
+      ...board,
+      notes: board.notes.map((note) =>
+        note.note_id === note_id
+          ? { ...note, description: newDescription }
+          : note
+      ),
     }));
     setBoards(updatedBoards);
   };
@@ -183,7 +201,13 @@ function Boards() {
       {/* Sidebar */}
       <Sidebar boards={boards} onSelectBoard={setSelectedBoardId} />
       {/* Board Content*/}
-      {selectedBoard && <Board board={selectedBoard} onToggleNoteCompleted={toggleNoteCompleted} />}
+      {selectedBoard && (
+        <Board
+          board={selectedBoard}
+          onToggleNoteCompleted={toggleNoteCompleted}
+          onDescriptionChange={handleDescriptionChange}
+        />
+      )}
     </div>
   );
 }
