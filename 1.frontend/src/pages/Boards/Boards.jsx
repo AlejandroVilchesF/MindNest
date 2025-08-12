@@ -3,7 +3,7 @@ import Board from "@/components/UI/Board";
 import { useState } from "react";
 
 function Boards() {
-  // Example Board to work with the frontend
+  // Mock Boards to work with the frontend
   const [boards, setBoards] = useState([
     {
       board_id: 1,
@@ -190,6 +190,40 @@ function Boards() {
     setBoards(updatedBoards);
   };
 
+  //Callback to add a new note to a board
+  const handleAddNote = (boardId, title) => {
+    setBoards((prevBoards) =>
+      prevBoards.map((board) => {
+        if (board.board_id === boardId) {
+          const maxId = board.notes.length
+            ? Math.max(...board.notes.map((n) => n.note_id))
+            : 0;
+          const newNote = {
+            note_id: maxId + 1,
+            note_title: title,
+            description: "",
+            completed: false,
+            position: board.notes.length + 1,
+            parent_note: null,
+            created: new Date().toISOString(),
+            modified: new Date().toISOString(),
+            created_by: {
+              user_id: 10, // temporal
+              user_name: "johndoe",
+              user_email: "john@example.com",
+            },
+          };
+
+          return {
+            ...board,
+            notes: [...board.notes, newNote],
+          };
+        }
+        return board;
+      })
+    );
+  };
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
@@ -206,6 +240,7 @@ function Boards() {
           board={selectedBoard}
           onToggleNoteCompleted={toggleNoteCompleted}
           onDescriptionChange={handleDescriptionChange}
+          onAddNote={handleAddNote}
         />
       )}
     </div>
