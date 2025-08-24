@@ -164,7 +164,7 @@ function Boards() {
     },
   ]);
 
-  //Control the toggle of the check in the differents Notes
+  // Control the toggle of the check in the differents Notes
   const toggleNoteCompleted = (note_id) => {
     const updatedBoards = boards.map((board) => ({
       ...board,
@@ -177,7 +177,7 @@ function Boards() {
     setBoards(updatedBoards);
   };
 
-  //Control the description modifications
+  // Control the description modifications
   const handleDescriptionChange = (note_id, newDescription) => {
     const updatedBoards = boards.map((board) => ({
       ...board,
@@ -190,14 +190,18 @@ function Boards() {
     setBoards(updatedBoards);
   };
 
-  //Callback to add a new note to a board
+  // Function to obtain the max task id
+  const obtainMaxTaskId = () => {
+    const allIds = boards.flatMap(board => board.notes.map(note => note.note_id));
+    return Math.max(...allIds)
+  }
+
+  // Callback to add a new note to a board
   const handleAddNote = (boardId, title) => {
     setBoards((prevBoards) =>
       prevBoards.map((board) => {
         if (board.board_id === boardId) {
-          const maxId = board.notes.length
-            ? Math.max(...board.notes.map((n) => n.note_id))
-            : 0;
+          const maxId = obtainMaxTaskId();
           const newNote = {
             note_id: maxId + 1,
             note_title: title,
@@ -224,6 +228,46 @@ function Boards() {
     );
   };
 
+  // Callback to add a new task to a note
+  const handleAddTask = (parentNoteId, title) => {
+    console.log(parentNoteId)
+    setBoards((prevBoards) =>
+      prevBoards.map((board) => {
+        const parentExists = board.notes.some(
+          (n) => n.note_id === parentNoteId
+        );
+        if (parentExists) {
+          const maxId = prevBoards
+            .flatMap((b) => b.notes.map((n) => n.note_id))
+            .reduce((max, id) => Math.max(max, id), 0);
+
+          const newTask = {
+            note_id: maxId + 1,
+            note_title: title,
+            description: "Please click to add a description",
+            completed: false,
+            position: board.notes.length + 1,
+            parent_note: parentNoteId,
+            created: new Date().toISOString(),
+            modified: new Date().toISOString(),
+            created_by: {
+              user_id: 10,
+              user_name: "johndoe",
+              user_email: "john@example.com",
+            },
+          };
+
+          return {
+            ...board,
+            notes: [...board.notes, newTask],
+          };
+        }
+
+        return board;
+      })
+    );
+  };
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
@@ -241,6 +285,7 @@ function Boards() {
           onToggleNoteCompleted={toggleNoteCompleted}
           onDescriptionChange={handleDescriptionChange}
           onAddNote={handleAddNote}
+          onAddTask={handleAddTask}
         />
       )}
     </div>
