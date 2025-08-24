@@ -268,6 +268,16 @@ function Boards() {
     );
   };
 
+  // Callback to delete a note
+  const handleDeleteNote = (noteId) => {
+    setBoards((prevBoards) =>
+      prevBoards.map((board) => ({
+        ...board,
+        notes: board.notes.filter((note) => note.note_id !== noteId && note.parent_note !== noteId),
+      }))
+    );
+  };
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
@@ -286,6 +296,7 @@ function Boards() {
           onDescriptionChange={handleDescriptionChange}
           onAddNote={handleAddNote}
           onAddTask={handleAddTask}
+          onDeleteNote={handleDeleteNote}
         />
       )}
     </div>

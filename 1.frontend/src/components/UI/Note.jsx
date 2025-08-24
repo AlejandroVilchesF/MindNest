@@ -9,6 +9,7 @@ function Note({
   onToggleNoteCompleted,
   onDescriptionChange,
   onAddTask,
+  onDeleteNote
 }) {
   const [selectedNote, setSelectedNote] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -30,7 +31,7 @@ function Note({
     <>
       <div className="bg-white w-60 h-fit rounded-lg py-3 px-4 shadow-sm">
         {notes.map((note) => (
-          <NoteItem key={note.id} note={note} onClick={setSelectedNote} />
+          <NoteItem key={note.id} note={note} onClick={setSelectedNote} onDeleteNote={onDeleteNote} />
         ))}
         {/* Add new task */}
         {isAdding ? (

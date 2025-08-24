@@ -3,7 +3,7 @@ import Note from "@/components/UI/Note";
 import { useState } from "react";
 import Button from "@/components/UI/Button"; // Asegúrate de importar tu componente Button
 
-function Board({ board, onToggleNoteCompleted, onDescriptionChange, onAddNote, onAddTask }) {
+function Board({ board, onToggleNoteCompleted, onDescriptionChange, onAddNote, onAddTask, onDeleteNote }) {
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
 
@@ -72,6 +72,7 @@ function Board({ board, onToggleNoteCompleted, onDescriptionChange, onAddNote, o
             onToggleNoteCompleted={onToggleNoteCompleted}
             onDescriptionChange={onDescriptionChange}
             onAddTask={onAddTask}
+            onDeleteNote={onDeleteNote}
           />
         ))}
 
