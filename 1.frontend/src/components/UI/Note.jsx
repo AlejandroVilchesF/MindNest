@@ -69,6 +69,7 @@ function Note({
           onClose={() => setSelectedNote(null)}
           onToggleNoteCompleted={onToggleNoteCompleted}
           onDescriptionChange={onDescriptionChange}
+          onDeleteNote={onDeleteNote}
         />
       </Modal>
     </>

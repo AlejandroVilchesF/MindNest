@@ -6,12 +6,18 @@ import MDEditor from "@uiw/react-md-editor";
 import Button from "@/components/UI/Button";
 import { useContentModal } from "@/hooks/useContentModal";
 import { formatDate } from "@/utils/dateFormatter";
+import Dropdown from "./Dropdown";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
+import { TrashIcon} from "@heroicons/react/24/outline";
+import { PencilSquareIcon} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 function ContentModal({
   content,
   onClose,
   onToggleNoteCompleted,
   onDescriptionChange,
+  onDeleteNote
 }) {
   const {
     state,
@@ -37,9 +43,32 @@ function ContentModal({
             onClick={handleToggle}
           />
         </div>
-        <button onClick={onClose} className="text-gray-500 cursor-pointer">
-          &times;
-        </button>
+        {/* Task options */}
+        <div className="flex items-center">
+          {/* Dropdown */}
+          <Dropdown buttonContent={<EllipsisHorizontalIcon className="w-5 h-5 text-gray-500 cursor-pointer" />}>
+            <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2">
+              <PencilSquareIcon className="w-5 h-5" /> Edit
+            </button>
+            <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2" 
+              onClick={() => {
+                onDeleteNote(content.note_id);
+                onClose();
+              }}
+            >
+              <TrashIcon className="w-5 h-5" /> Delete
+            </button>
+          </Dropdown>
+
+          {/* Separator line */}
+          <div className="h-5 w-px bg-gray-400 mx-1"></div>
+
+          {/* Closing button */}
+          <button onClick={onClose} className="cursor-pointer p-1 hover:bg-gray-200 rounded">
+            <XMarkIcon className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
       </div>
 
       {/* Modal Body */}
