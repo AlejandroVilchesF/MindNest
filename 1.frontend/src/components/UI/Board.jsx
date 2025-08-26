@@ -3,7 +3,15 @@ import Note from "@/components/UI/Note";
 import { useState } from "react";
 import Button from "@/components/UI/Button"; // Asegúrate de importar tu componente Button
 
-function Board({ board, onToggleNoteCompleted, onDescriptionChange, onAddNote, onAddTask, onDeleteNote }) {
+function Board({
+  board,
+  onToggleNoteCompleted,
+  onDescriptionChange,
+  onAddNote,
+  onAddTask,
+  onDeleteNote,
+  onTitleChange
+}) {
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
 
@@ -73,6 +81,7 @@ function Board({ board, onToggleNoteCompleted, onDescriptionChange, onAddNote, o
             onDescriptionChange={onDescriptionChange}
             onAddTask={onAddTask}
             onDeleteNote={onDeleteNote}
+            onTitleChange={onTitleChange}
           />
         ))}
 
@@ -89,7 +98,11 @@ function Board({ board, onToggleNoteCompleted, onDescriptionChange, onAddNote, o
             />
             <div className="mt-2 w-full flex justify-between">
               <Button text="Save" extraClasses="mr-2" onClick={handleAdd} />
-              <Button text="Cancel" color="transparent" onClick={handleCancel} />
+              <Button
+                text="Cancel"
+                color="transparent"
+                onClick={handleCancel}
+              />
             </div>
           </div>
         ) : (

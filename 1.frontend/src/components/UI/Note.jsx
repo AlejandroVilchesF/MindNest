@@ -9,9 +9,10 @@ function Note({
   onToggleNoteCompleted,
   onDescriptionChange,
   onAddTask,
-  onDeleteNote
+  onDeleteNote,
+  onTitleChange,
 }) {
-  const [selectedNote, setSelectedNote] = useState(null);
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
 
@@ -27,12 +28,21 @@ function Note({
     setIsAdding(false);
   };
 
+  const selectedNote = notes.find((note) => note.note_id === selectedNoteId);
+
   return (
     <>
       <div className="bg-white w-60 h-fit rounded-lg py-3 px-4 shadow-sm">
         {notes.map((note) => (
-          <NoteItem key={note.id} note={note} onClick={setSelectedNote} onDeleteNote={onDeleteNote} />
+          <NoteItem
+            key={note.id}
+            note={note}
+            onClick={() => setSelectedNoteId(note.note_id)}
+            onDeleteNote={onDeleteNote}
+            onTitleChange={onTitleChange}
+          />
         ))}
+
         {/* Add new task */}
         {isAdding ? (
           <div className="bg-white w-full h-fit rounded-lg py-3 px-4 text-sm shadow-sm">
@@ -63,16 +73,20 @@ function Note({
         )}
       </div>
 
-      <Modal isOpen={!!selectedNote} onClose={() => setSelectedNote(null)}>
-        <ContentModal
-          content={selectedNote}
-          onClose={() => setSelectedNote(null)}
-          onToggleNoteCompleted={onToggleNoteCompleted}
-          onDescriptionChange={onDescriptionChange}
-          onDeleteNote={onDeleteNote}
-        />
+      <Modal isOpen={!!selectedNote} onClose={() => setSelectedNoteId(null)}>
+        {selectedNote && (
+          <ContentModal
+            content={selectedNote}
+            onClose={() => setSelectedNoteId(null)}
+            onToggleNoteCompleted={onToggleNoteCompleted}
+            onDescriptionChange={onDescriptionChange}
+            onDeleteNote={onDeleteNote}
+            onTitleChange={onTitleChange}
+          />
+        )}
       </Modal>
     </>
   );
 }
+
 export default Note;

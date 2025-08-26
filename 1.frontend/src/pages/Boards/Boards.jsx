@@ -278,6 +278,19 @@ function Boards() {
     );
   };
 
+  // Callback to update title of a note or task
+  const handleTitleChange = (noteId, newTitle) => {
+    const updatedBoards = boards.map((board) => ({
+      ...board,
+      notes: board.notes.map((note) =>
+        note.note_id === noteId
+          ? { ...note, note_title: newTitle }
+          : note
+      ),
+    }));
+    setBoards(updatedBoards);
+  }
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
@@ -297,6 +310,7 @@ function Boards() {
           onAddNote={handleAddNote}
           onAddTask={handleAddTask}
           onDeleteNote={handleDeleteNote}
+          onTitleChange={handleTitleChange}
         />
       )}
     </div>
