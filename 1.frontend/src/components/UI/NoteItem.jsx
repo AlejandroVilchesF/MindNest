@@ -1,4 +1,6 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { TrashIcon} from "@heroicons/react/24/outline";
+import { PencilSquareIcon} from "@heroicons/react/24/outline";
 import Dropdown from "./Dropdown";
 
 
@@ -10,8 +12,12 @@ function NoteItem({ note, onClick, onDeleteNote }) {
           {note.note_title}
         </h1>
         <Dropdown buttonContent={<EllipsisVerticalIcon className="w-5 h-5 text-gray-500 cursor-pointer" />}>
-          <button className="px-3 py-2 hover:bg-gray-100 text-left w-full">Edit</button>
-          <button className="px-3 py-2 hover:bg-gray-100 text-left w-full" onClick={() => onDeleteNote(note.note_id)}>Delete</button>
+          <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2">
+            <PencilSquareIcon className="w-5 h-5"/> Edit
+          </button>
+          <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2" onClick={() => onDeleteNote(note.note_id)}>
+            <TrashIcon className="w-5 h-5"/> Delete
+          </button>
         </Dropdown>
       </div>
     );
