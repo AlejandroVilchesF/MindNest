@@ -1,8 +1,7 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import Note from "@/components/UI/Note";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@/components/UI/Button";
 import Dropdown from "./Dropdown";
 
@@ -15,10 +14,13 @@ function Board({
   onDeleteNote,
   onTitleChange,
   onBoardDelete,
-  onColorChange
+  onColorChange,
+  onBoardTitleChange
 }) {
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [newBoardTitle, setNewBoardTitle] = useState(board.board_name || "");
 
   const formatDate = (dateStr) => {
     return new Date(dateStr).toLocaleDateString("en-GB", {
@@ -56,49 +58,87 @@ function Board({
     setNewTitle("");
     setIsAdding(false);
   };
+
+  const handleBoardTitleSave = () => {
+    if (newBoardTitle.trim() !== "") {
+      onBoardTitleChange(board.board_id, newBoardTitle);
+      setIsEditing(false);
+    }
+  };
+
+  const handleBoardTitleCancel = () => {
+    setNewBoardTitle(board.board_name);
+    setIsEditing(false);
+  };
+
+  useEffect(() => {
+    setNewBoardTitle(board.board_name);
+    setIsEditing(false);
+  }, [board.board_name]);
   
   return (
     <div className="flex-1 flex flex-col" style={{ backgroundColor: board.background_color }}>
       {/* Subheader */}
       <div className="w-full h-14 px-6 bg-black/30 text-white flex items-center justify-between shadow-sm border-b border-white/10">
-        <div className="font-bold">{board.board_name}</div>
-        <div className="flex items-center space-x-3 text-sm text-white/80">
-          <div className="text-right">
-            <div className="font-medium">{board.created_by.user_name}</div>
-            <div>{formatDate(board.created)}</div>
+      {/* Board Title*/}
+      {isEditing ? (
+        <div className="flex items-center gap-2 max-w-xs">
+          <input
+            type="text"
+            autoFocus
+            value={newBoardTitle}
+            onChange={(e) => setNewBoardTitle(e.target.value)}
+            className="border border-white-500 rounded px-2 py-1 flex-grow"
+            placeholder="Edit title..."
+          />
+          <div className="flex gap-2">
+            <Button text="Save" onClick={handleBoardTitleSave} extraClasses="shrink-0 w-auto" />
+            <Button text="Cancel" color="red" type="outline" onClick={handleBoardTitleCancel} extraClasses="shrink-0 w-auto" />
           </div>
-          {/* Dropdown */}
-          <Dropdown buttonContent={<EllipsisVerticalIcon className="w-5 h-5 text-white cursor-pointer" />} side="right">
-            {(closeDropdown) => (
-              <>
-                {/* Color picker */}
-                <div className="px-3 py-2 text-black hover:bg-gray-100 w-full flex items-center gap-2 cursor-pointer">
-                  <input type="color"
-                    value={board.background_color}
-                    onChange={(e) => {
-                      onColorChange(board.board_id, e.target.value);
-                    }}
-                    className="w-5 h-5 p-0 border-0 cursor-pointer"
-                  />
-                  <span>Change color</span>
-                </div>
-
-                {/* Delete button */}
-                <button
-                  className="px-3 py-2 text-black hover:bg-gray-100 text-left w-full flex items-center gap-2 cursor-pointer"
-                  onClick={() => {
-                    onBoardDelete(board.board_id);
-                    closeDropdown();
-                  }}
-                >
-                  <TrashIcon className="w-5 h-5" /> Delete
-                </button>
-              </>
-            )}
-          </Dropdown>
-
         </div>
+      ) : (
+        <div className="font-bold cursor-pointer" onClick={() => setIsEditing(true)}>
+          {board.board_name}
+        </div>
+      )}
+      {/* Board info and Options */}
+      <div className="flex items-center space-x-3 text-sm text-white/80">
+        <div className="text-right">
+          <div className="font-medium">{board.created_by.user_name}</div>
+          <div>{formatDate(board.created)}</div>
+        </div>
+        {/* Dropdown */}
+        <Dropdown buttonContent={<EllipsisVerticalIcon className="w-5 h-5 text-white cursor-pointer" />} side="right">
+          {(closeDropdown) => (
+            <>
+              {/* Color picker */}
+              <div className="px-3 py-2 text-black hover:bg-gray-100 w-full flex items-center gap-2 cursor-pointer">
+                <input type="color"
+                  value={board.background_color}
+                  onChange={(e) => {
+                    onColorChange(board.board_id, e.target.value);
+                  }}
+                  className="w-5 h-5 p-0 border-0 cursor-pointer"
+                />
+                <span>Change color</span>
+              </div>
+
+              {/* Delete button */}
+              <button
+                className="px-3 py-2 text-black hover:bg-gray-100 text-left w-full flex items-center gap-2 cursor-pointer"
+                onClick={() => {
+                  onBoardDelete(board.board_id);
+                  closeDropdown();
+                }}
+              >
+                <TrashIcon className="w-5 h-5" /> Delete
+              </button>
+            </>
+          )}
+        </Dropdown>
+
       </div>
+    </div>
 
       {/* Notes content */}
       <main className="flex-1 p-4 flex space-x-4">

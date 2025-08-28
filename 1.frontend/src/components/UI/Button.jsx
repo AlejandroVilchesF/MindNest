@@ -5,6 +5,10 @@ function Button({ text, type = "normal", color = "blue", extraClasses="", onClic
       normal: "bg-[#00549D] text-white border border-[#00549D]",
       outline: "border border-[#00549D] border-2 font-semibold bg-transparent",
     },
+    red: {
+      normal: "bg-[#E57373] text-white border border-[#E57373]",
+      outline: "border border-[#E57373] hover:bg-[#E57373] border-2 font-semibold bg-transparent",
+    },
     transparent: {
       normal: "bg-transparent hover:bg-gray-50",
     }

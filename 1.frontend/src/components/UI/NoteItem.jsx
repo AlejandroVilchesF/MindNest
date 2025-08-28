@@ -1,6 +1,5 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { TrashIcon} from "@heroicons/react/24/outline";
-import { PencilSquareIcon} from "@heroicons/react/24/outline";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
 import Button from "@/components/UI/Button";

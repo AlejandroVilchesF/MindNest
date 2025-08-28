@@ -323,6 +323,21 @@ function Boards() {
     );
   }
 
+  // Callback to handle board title change
+  const handleBoardTitleChange = (boardId, newTitle) => {
+    setBoards((prevBoards) =>
+      prevBoards.map((board) => {
+        if (board.board_id === boardId) {
+          return {
+            ...board,
+            board_name: newTitle
+          };
+        }
+        return board;
+      })
+    );
+  }
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
@@ -345,6 +360,7 @@ function Boards() {
           onTitleChange={handleTitleChange}
           onBoardDelete={handleBoardDelete}
           onColorChange={handleColorChange}
+          onBoardTitleChange={handleBoardTitleChange}
         />
       )}
     </div>
