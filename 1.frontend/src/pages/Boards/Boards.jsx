@@ -10,6 +10,7 @@ function Boards() {
       board_name: "Daily Tasks",
       created: "2025-06-01T09:00:00Z",
       modified: "2025-06-02T10:00:00Z",
+      background_color: "#EAEAEA",
       created_by: {
         user_id: 10,
         user_name: "johndoe",
@@ -97,6 +98,7 @@ function Boards() {
       board_name: "Project Launch",
       created: "2025-06-10T14:00:00Z",
       modified: "2025-06-12T16:30:00Z",
+      background_color: "#EAEAEA",
       created_by: {
         user_id: 12,
         user_name: "annasmith",
@@ -155,6 +157,7 @@ function Boards() {
       board_name: "Empty Board",
       created: "2025-06-10T14:00:00Z",
       modified: "2025-06-12T16:30:00Z",
+      background_color: "#EAEAEA",
       created_by: {
         user_id: 12,
         user_name: "annasmith",
@@ -305,6 +308,21 @@ function Boards() {
     });
   }
 
+  // Callback to update background color
+  const handleColorChange = (boardId, newColor) => {
+    setBoards((prevBoards) =>
+      prevBoards.map((board) => {
+        if (board.board_id === boardId) {
+          return {
+            ...board,
+            background_color: newColor
+          };
+        }
+        return board;
+      })
+    );
+  }
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
@@ -326,6 +344,7 @@ function Boards() {
           onDeleteNote={handleDeleteNote}
           onTitleChange={handleTitleChange}
           onBoardDelete={handleBoardDelete}
+          onColorChange={handleColorChange}
         />
       )}
     </div>

@@ -89,21 +89,8 @@ function ContentModal({
         {/* Task options */}
         <div className="flex items-center">
           {/* Dropdown */}
-          <Dropdown
-            buttonContent={
-              <EllipsisHorizontalIcon className="w-5 h-5 text-gray-500 cursor-pointer" />
-            }
-          >
-            <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2">
-              <PencilSquareIcon className="w-5 h-5" /> Edit
-            </button>
-            <button
-              className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2"
-              onClick={() => {
-                onDeleteNote(content.note_id);
-                onClose();
-              }}
-            >
+          <Dropdown buttonContent={<EllipsisHorizontalIcon className="w-5 h-5 text-gray-500 cursor-pointer" />}>
+            <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2" onClick={() => {onDeleteNote(content.note_id); onClose();}}>
               <TrashIcon className="w-5 h-5" /> Delete
             </button>
           </Dropdown>

@@ -14,7 +14,8 @@ function Board({
   onAddTask,
   onDeleteNote,
   onTitleChange,
-  onBoardDelete
+  onBoardDelete,
+  onColorChange
 }) {
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
@@ -57,7 +58,7 @@ function Board({
   };
   
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col" style={{ backgroundColor: board.background_color }}>
       {/* Subheader */}
       <div className="w-full h-14 px-6 bg-black/30 text-white flex items-center justify-between shadow-sm border-b border-white/10">
         <div className="font-bold">{board.board_name}</div>
@@ -70,15 +71,32 @@ function Board({
           <Dropdown buttonContent={<EllipsisVerticalIcon className="w-5 h-5 text-white cursor-pointer" />} side="right">
             {(closeDropdown) => (
               <>
-                <button className="px-3 py-2 text-black hover:bg-gray-100 text-left w-full flex items-center gap-2 cursor-pointer">
-                  <PencilSquareIcon className="w-5 h-5" /> Edit
-                </button>
-                <button className="px-3 py-2 text-black hover:bg-gray-100 text-left w-full flex items-center gap-2 cursor-pointer" onClick={() => {onBoardDelete(board.board_id); closeDropdown();}}>
+                {/* Color picker */}
+                <div className="px-3 py-2 text-black hover:bg-gray-100 w-full flex items-center gap-2 cursor-pointer">
+                  <input type="color"
+                    value={board.background_color}
+                    onChange={(e) => {
+                      onColorChange(board.board_id, e.target.value);
+                    }}
+                    className="w-5 h-5 p-0 border-0 cursor-pointer"
+                  />
+                  <span>Change color</span>
+                </div>
+
+                {/* Delete button */}
+                <button
+                  className="px-3 py-2 text-black hover:bg-gray-100 text-left w-full flex items-center gap-2 cursor-pointer"
+                  onClick={() => {
+                    onBoardDelete(board.board_id);
+                    closeDropdown();
+                  }}
+                >
                   <TrashIcon className="w-5 h-5" /> Delete
                 </button>
               </>
             )}
           </Dropdown>
+
         </div>
       </div>
 

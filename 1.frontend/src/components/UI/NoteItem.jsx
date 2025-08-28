@@ -44,9 +44,6 @@ function NoteItem({ note, onClick, onDeleteNote, onTitleChange }) {
           <h1 className="font-bold text-lg cursor-pointer" onClick={() => setIsEditing(true)}>{note.note_title}</h1>
         )}
         <Dropdown buttonContent={<EllipsisVerticalIcon className="w-5 h-5 text-gray-500 cursor-pointer" />}>
-          <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2">
-            <PencilSquareIcon className="w-5 h-5"/> Edit
-          </button>
           <button className="px-3 py-2 hover:bg-gray-100 text-left w-full flex items-center gap-2" onClick={() => onDeleteNote(note.note_id)}>
             <TrashIcon className="w-5 h-5"/> Delete
           </button>
