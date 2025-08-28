@@ -291,6 +291,20 @@ function Boards() {
     setBoards(updatedBoards);
   }
 
+  // Callback to delete boards
+  const handleBoardDelete = (boardId) => {
+    setBoards((prevBoards) => {
+      const updatedBoards = prevBoards.filter(
+        (board) => board.board_id !== boardId
+      );
+
+      const nextBoardId = updatedBoards.length > 0 ? updatedBoards[0].board_id : null;
+      setSelectedBoardId(nextBoardId);
+
+      return updatedBoards;
+    });
+  }
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
@@ -311,6 +325,7 @@ function Boards() {
           onAddTask={handleAddTask}
           onDeleteNote={handleDeleteNote}
           onTitleChange={handleTitleChange}
+          onBoardDelete={handleBoardDelete}
         />
       )}
     </div>

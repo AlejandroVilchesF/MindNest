@@ -1,7 +1,10 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import Note from "@/components/UI/Note";
 import { useState } from "react";
-import Button from "@/components/UI/Button"; // Asegúrate de importar tu componente Button
+import Button from "@/components/UI/Button";
+import Dropdown from "./Dropdown";
 
 function Board({
   board,
@@ -10,7 +13,8 @@ function Board({
   onAddNote,
   onAddTask,
   onDeleteNote,
-  onTitleChange
+  onTitleChange,
+  onBoardDelete
 }) {
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
@@ -51,7 +55,7 @@ function Board({
     setNewTitle("");
     setIsAdding(false);
   };
-
+  
   return (
     <div className="flex-1 flex flex-col">
       {/* Subheader */}
@@ -62,12 +66,19 @@ function Board({
             <div className="font-medium">{board.created_by.user_name}</div>
             <div>{formatDate(board.created)}</div>
           </div>
-          <button
-            aria-label="Board options"
-            className="p-2 rounded hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
-          >
-            <EllipsisVerticalIcon className="w-6 h-6 text-white" />
-          </button>
+          {/* Dropdown */}
+          <Dropdown buttonContent={<EllipsisVerticalIcon className="w-5 h-5 text-white cursor-pointer" />} side="right">
+            {(closeDropdown) => (
+              <>
+                <button className="px-3 py-2 text-black hover:bg-gray-100 text-left w-full flex items-center gap-2 cursor-pointer">
+                  <PencilSquareIcon className="w-5 h-5" /> Edit
+                </button>
+                <button className="px-3 py-2 text-black hover:bg-gray-100 text-left w-full flex items-center gap-2 cursor-pointer" onClick={() => {onBoardDelete(board.board_id); closeDropdown();}}>
+                  <TrashIcon className="w-5 h-5" /> Delete
+                </button>
+              </>
+            )}
+          </Dropdown>
         </div>
       </div>
 
