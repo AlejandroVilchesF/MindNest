@@ -1,5 +1,8 @@
 import Sidebar from "@/components/Layout/Sidebar";
 import Board from "@/components/UI/Board";
+import Modal from "@/components/UI/Modal";
+import CreateBoardModal from "@/components/UI/CreateBoardModal";
+import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 function Boards() {
@@ -233,7 +236,6 @@ function Boards() {
 
   // Callback to add a new task to a note
   const handleAddTask = (parentNoteId, title) => {
-    console.log(parentNoteId)
     setBoards((prevBoards) =>
       prevBoards.map((board) => {
         const parentExists = board.notes.some(
@@ -338,11 +340,35 @@ function Boards() {
     );
   }
 
+  // Callback to handle new boards additions
+  const handleAddBoard = (boardTitle, backgroundColor) => {
+    setBoards((prevBoards) => {
+      const newBoard = {
+        board_id: prevBoards.length + 1,
+        board_name: boardTitle,
+        created: new Date().toISOString(),
+        modified: new Date().toISOString(),
+        background_color: backgroundColor,
+        created_by: {
+          user_id: 10,
+          user_name: "johndoe",
+          user_email: "john@example.com",
+        },
+        notes: [],
+      };
+      return [...prevBoards, newBoard];
+    });
+  };
+
   // UseState to control which board is visualized
   const [selectedBoardId, setSelectedBoardId] = useState(boards[0]?.board_id);
   const selectedBoard = boards.find(
     (board) => board.board_id === selectedBoardId
   );
+  // Params to control the new board modal from header
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isNewBoardModalOpen = searchParams.get("modal") === "new";
+  const handleCloseNewBoardModal = () => {setSearchParams({});};
 
   return (
     <div className="flex h-full">
@@ -363,6 +389,10 @@ function Boards() {
           onBoardTitleChange={handleBoardTitleChange}
         />
       )}
+      {/* New Boards Modal */}
+      <Modal isOpen={isNewBoardModalOpen} onClose={handleCloseNewBoardModal}>
+        <CreateBoardModal onClose={handleCloseNewBoardModal} onAddBoard={handleAddBoard}/>
+      </Modal>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function Header() {
       {/* Center: Navigation */}
       <div className="flex space-x-10">
         <NavElement to="/boards" label="Boards" Icon={ClipboardIcon} />
-        <NavElement to="/boards" label="New Board" Icon={PlusCircleIcon} />
+        <NavElement to="/boards?modal=new" label="New Board" Icon={PlusCircleIcon} />
         <NavElement to="/notes" label="Notes" Icon={PaperClipIcon} />
       </div>
 

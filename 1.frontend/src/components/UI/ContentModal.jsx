@@ -163,7 +163,7 @@ function ContentModal({
               <span className="text-md font-medium">Activity</span>
             </div>
           </div>
-
+          {/* Activity Column */}
           <div className="mt-2">
             <div>
               <div>
